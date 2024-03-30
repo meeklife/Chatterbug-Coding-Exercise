@@ -27,3 +27,14 @@ def generate_password(length: int, criteria1: str, criteria2: str) -> str:
     # chars = string.ascii_letters + criteria1 + criteria2
 
     return ''.join(secrets.choice(chars) for i in range(length))
+
+
+def get_weather(city: str):
+    API_KEY = '8d7cc46793b6442e9c2153422230112'
+    BASE_URL = 'http://api.weatherapi.com/v1'
+    CITY = city
+
+    url = BASE_URL + '/current.json' + '?' + 'key=' + API_KEY + '&q=' + CITY
+
+    response = requests.get(url).json()
+    return response

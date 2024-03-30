@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, Request, Query
-from script import PasswordRequest, generate_password, get_weather
+from script import PasswordRequest, generate_password, get_holiday
 import requests
 
 app = FastAPI()
@@ -19,10 +19,14 @@ def generate_password_endpoint(password_request: PasswordRequest):
         raise HTTPException(status_code=400, detail=str(err))
 
 
-@app.get("/api/weather/{city}")
-def weather_report_endpoint(city: str = Query):
+@app.get("/api/holiday")
+def weather_report_endpoint(country: str, year: str, month: str, day: str):
     try:
-        response = get_weather(city)
+        response = get_holiday(country, year, month, day)
+
+        if len(response) == 0:
+            return {"message": "No Holidays were found"}
+
         return response
     except ValueError as err:
         raise HTTPException(status_code=400, detail=str(err))

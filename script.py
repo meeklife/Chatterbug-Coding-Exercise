@@ -24,17 +24,16 @@ def generate_password(length: int, criteria1: str, criteria2: str) -> str:
         raise ValueError("Provide unique additional criteria")
 
     chars = criteria1 + criteria2 + string.punctuation
-    # chars = string.ascii_letters + criteria1 + criteria2
 
     return ''.join(secrets.choice(chars) for i in range(length))
 
 
-def get_weather(city: str):
-    API_KEY = '8d7cc46793b6442e9c2153422230112'
-    BASE_URL = 'http://api.weatherapi.com/v1'
-    CITY = city
+def get_holiday(country: str, year: str, month: str, day: str):
+    API_KEY = '08ee5e03738c41339c84e89d34e3e0ea'
+    BASE_URL = 'https://holidays.abstractapi.com/v1/'
 
-    url = BASE_URL + '/current.json' + '?' + 'key=' + API_KEY + '&q=' + CITY
+    url = BASE_URL + '?api_key=' + API_KEY + '&country=' + \
+        country + '&year=' + year + '&month=' + month + '&day=' + day
 
     response = requests.get(url).json()
     return response
